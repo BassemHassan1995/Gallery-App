@@ -23,6 +23,7 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
     ): FragmentGalleryBinding = FragmentGalleryBinding.inflate(inflater, container, false)
 
     override fun setupViews() {
+        super.setupViews()
         binding.galleryRecyclerView.adapter = galleryAdapter
 
         galleryAdapter.submitList(
