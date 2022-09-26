@@ -4,8 +4,8 @@ import android.net.Uri
 import androidx.recyclerview.widget.DiffUtil
 
 data class MediaItem(
-    val name: String,
     val id: Long = 1L,
+    val name: String,
     val contentUri: Uri? = null
 ) {
     companion object {

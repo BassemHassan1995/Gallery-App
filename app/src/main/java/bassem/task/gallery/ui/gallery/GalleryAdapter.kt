@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import bassem.task.gallery.R
 import bassem.task.gallery.data.model.Album
 import bassem.task.gallery.databinding.ItemAlbumLayoutBinding
 import com.bumptech.glide.Glide
@@ -15,9 +14,6 @@ import com.bumptech.glide.Glide
 internal class GalleryAdapter(private val onClick: (Album) -> Unit) :
     ListAdapter<Album, GalleryAdapter.ViewHolder>(Album.DiffCallback) {
 
-    /**
-     * Basic [RecyclerView.ViewHolder] for our gallery.
-     */
     internal class ViewHolder(private var binding: ItemAlbumLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -27,11 +23,10 @@ internal class GalleryAdapter(private val onClick: (Album) -> Unit) :
 
                 count.text = album.count.toString()
                 name.text = album.name
-                image.setImageResource(R.color.black)           //TODO: Remove this line
-//                Glide.with(image)
-////                    .load(album.thumbnail)
-//                    .centerCrop()
-//                    .into(image)
+                Glide.with(image)
+                    .load(album.thumbnail)
+                    .centerCrop()
+                    .into(image)
             }
         }
     }

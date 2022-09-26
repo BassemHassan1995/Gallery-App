@@ -4,9 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import bassem.task.gallery.R
-import bassem.task.gallery.databinding.ItemImageLayoutBinding
 import bassem.task.gallery.data.model.MediaItem
+import bassem.task.gallery.databinding.ItemImageLayoutBinding
 import com.bumptech.glide.Glide
 
 /**
@@ -24,13 +23,11 @@ internal class AlbumAdapter :
         fun bind(mediaItem: MediaItem) {
             with(binding) {
                 root.tag = mediaItem
-                image.setImageResource(R.color.teal_200)
-//
-//                Glide.with(image)
-//                    .load(mediaItem.contentUri)
-//                    .thumbnail(0.33f)
-//                    .centerCrop()
-//                    .into(image)
+                Glide.with(image)
+                    .load(mediaItem.contentUri)
+                    .thumbnail(0.33f)
+                    .centerCrop()
+                    .into(image)
             }
         }
     }

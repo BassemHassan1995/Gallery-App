@@ -31,7 +31,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>() {
     override fun observeData() {
         super.observeData()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.selectedAlbum.flowWithLifecycle(lifecycle).collect {
+            viewModel.selectedAlbumImages.flowWithLifecycle(lifecycle).collect {
                 albumAdapter.submitList(it)
             }
         }
