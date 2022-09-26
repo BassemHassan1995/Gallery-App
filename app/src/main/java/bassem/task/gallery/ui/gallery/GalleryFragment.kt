@@ -3,10 +3,12 @@ package bassem.task.gallery.ui.gallery
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import bassem.task.gallery.data.model.Album
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import bassem.task.gallery.databinding.FragmentGalleryBinding
 import bassem.task.gallery.ui.SharedViewModel
 import bassem.task.gallery.ui.base.BaseFragment
+import kotlinx.coroutines.launch
 
 class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
 
@@ -25,14 +27,18 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
     override fun setupViews() {
         super.setupViews()
         binding.galleryRecyclerView.adapter = galleryAdapter
-
-        galleryAdapter.submitList(
-            listOf(
-                Album(null, "First", "10"),
-                Album(null, "Second", "5"),
-                Album(null, "Third", "2"),
-                Album(null, "Forth", "70"),
-            )
-        )
     }
+
+    override fun observeData() {
+        super.observeData()
+        with(viewModel) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                galleryAlbums.flowWithLifecycle(lifecycle)
+                    .collect {
+                        galleryAdapter.submitList(it)
+                    }
+            }
+        }
+    }
+
 }
