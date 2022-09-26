@@ -2,8 +2,9 @@ package bassem.task.gallery.data.model
 
 import android.net.Uri
 import androidx.recyclerview.widget.DiffUtil
+import java.io.Serializable
 
-data class Album(val thumbnail: Uri? = null, val name: String, val count: String) {
+data class Album(val thumbnail: Uri? = null, val name: String, val count: Int) : Serializable {
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<Album>() {
             override fun areItemsTheSame(oldItem: Album, newItem: Album) =

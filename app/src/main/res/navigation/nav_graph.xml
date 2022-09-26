@@ -19,6 +19,11 @@
         android:id="@+id/album"
         android:name="bassem.task.gallery.ui.album.AlbumFragment"
         android:label="@string/action_album"
-        tools:layout="@layout/fragment_album" />
+        tools:layout="@layout/fragment_album" >
+        <argument
+            android:name="album"
+            app:argType="bassem.task.gallery.data.model.Album" />
+
+    </fragment>
 
 </navigation>

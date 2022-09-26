@@ -25,7 +25,7 @@ internal class GalleryAdapter(private val onClick: (Album) -> Unit) :
             with(binding) {
                 root.setOnClickListener { onClick(album) }
 
-                count.text = album.count
+                count.text = album.count.toString()
                 name.text = album.name
                 image.setImageResource(R.color.black)           //TODO: Remove this line
 //                Glide.with(image)
