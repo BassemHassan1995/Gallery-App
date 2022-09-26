@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/gallery">
+
+    <fragment
+        android:id="@+id/gallery"
+        android:name="bassem.task.gallery.ui.gallery.GalleryFragment"
+        android:label="@string/action_gallery"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_gallery_to_album"
+            app:destination="@id/album" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/album"
+        android:name="bassem.task.gallery.ui.album.AlbumFragment"
+        android:label="@string/action_album"
+        tools:layout="@layout/fragment_album" />
+
+</navigation>
