@@ -1,10 +1,14 @@
 package bassem.task.gallery.ui.gallery
 
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import bassem.task.gallery.R
 import bassem.task.gallery.databinding.FragmentGalleryBinding
 import bassem.task.gallery.ui.SharedViewModel
 import bassem.task.gallery.ui.base.BaseFragment
@@ -27,6 +31,18 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
     override fun setupViews() {
         super.setupViews()
         binding.galleryRecyclerView.adapter = galleryAdapter
+    }
+
+    override fun onChangeViewSelected(menuItem: MenuItem) {
+        with(binding.galleryRecyclerView) {
+            if (layoutManager is GridLayoutManager) {
+                layoutManager = LinearLayoutManager(context)
+                menuItem.setIcon(R.drawable.ic_grid_view)
+            } else {
+                layoutManager = GridLayoutManager(context, 2)
+                menuItem.setIcon(R.drawable.ic_list_view)
+            }
+        }
     }
 
     override fun observeData() {
