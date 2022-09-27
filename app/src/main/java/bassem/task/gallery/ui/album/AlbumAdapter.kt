@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 /**
  * A [ListAdapter] for [MediaItem]s.
  */
-internal class AlbumAdapter :
+internal class AlbumAdapter(private val onClick: (MediaItem) -> Unit) :
     ListAdapter<MediaItem, AlbumAdapter.ImageViewHolder>(MediaItem.DiffCallback) {
 
     /**
@@ -20,8 +20,11 @@ internal class AlbumAdapter :
     internal class ImageViewHolder(private var binding: ItemImageLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(mediaItem: MediaItem) {
+        fun bind(mediaItem: MediaItem, onClick: (MediaItem) -> Unit) {
             with(binding) {
+                root.setOnClickListener {
+                    onClick(mediaItem)
+                }
                 root.tag = mediaItem
                 Glide.with(image)
                     .load(mediaItem.contentUri)
@@ -42,7 +45,7 @@ internal class AlbumAdapter :
         )
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) =
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onClick)
 
 }
 
