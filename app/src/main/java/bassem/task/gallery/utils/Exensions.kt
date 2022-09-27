@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import bassem.task.gallery.R
 import bassem.task.gallery.data.model.MediaItem
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 fun Fragment.showSnackbar(
     @StringRes messageStringId: Int,
@@ -33,28 +35,35 @@ fun Fragment.showToast(stringId: Int) {
 fun Cursor.getImage(): MediaItem {
     val idColumn = getColumnIndexOrThrow(MediaStore.Images.Media._ID)
     val nameColumn = getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+    val dateAddedColumn = getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED)
 
     val id = getLong(idColumn)
     val name = getString(nameColumn)
+    val dateAdded = getLong(dateAddedColumn).toDate()
 
     val contentUri =
         ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
 
-    return MediaItem(id, name, contentUri)
+    return MediaItem(id, name, contentUri, dateAdded)
 }
 
 fun Cursor.getVideo(): MediaItem {
     val idColumn = getColumnIndexOrThrow(MediaStore.Video.Media._ID)
     val nameColumn = getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME)
+    val dateAddedColumn = getColumnIndexOrThrow(MediaStore.Video.Media.DATE_ADDED)
 
     val id = getLong(idColumn)
     val name = getString(nameColumn)
+    val dateAdded = getLong(dateAddedColumn).toDate()
 
     val contentUri =
         ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
 
-    return MediaItem(id, name, contentUri)
+    return MediaItem(id, name, contentUri, dateAdded)
 }
 
 fun Cursor.getAlbumName(): String =
     getString(getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
+
+fun Long.toDate(): Date =
+    Date(TimeUnit.SECONDS.toMillis(this))

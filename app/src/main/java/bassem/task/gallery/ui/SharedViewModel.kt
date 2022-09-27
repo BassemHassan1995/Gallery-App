@@ -63,7 +63,7 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
         return (images + videos)
             .distinct()
             .groupBy({ it.key }, { it.value })
-            .mapValues { (_, values) -> values.flatten() }
+            .mapValues { (_, values) -> values.flatten().sortedByDescending { it.dateAdded } }
     }
 
     @VisibleForTesting
@@ -72,6 +72,7 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
             val imagesProjection = arrayOf(
                 MediaStore.Images.Media._ID,                        //Image Id
                 MediaStore.Images.Media.DISPLAY_NAME,               //Image name
+                MediaStore.Images.Media.DATE_ADDED,                 //Image date added
                 MediaStore.Images.Media.BUCKET_DISPLAY_NAME,        //Album name
             )
 
@@ -100,6 +101,7 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
             val videoProjection = arrayOf(
                 MediaStore.Video.Media._ID,                        //Video Id
                 MediaStore.Video.Media.DISPLAY_NAME,               //Video name
+                MediaStore.Video.Media.DATE_ADDED,                //Video date added
                 MediaStore.Video.Media.BUCKET_DISPLAY_NAME,        //Album name
             )
 
