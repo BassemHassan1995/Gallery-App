@@ -15,7 +15,7 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
     override val viewModel by activityViewModels<SharedViewModel>()
     private val galleryAdapter: GalleryAdapter by lazy {
         GalleryAdapter {
-            navigateTo(GalleryFragmentDirections.actionGalleryToAlbum(it))
+            navigateTo(GalleryFragmentDirections.actionGalleryToAlbum(it.name))
         }
     }
 

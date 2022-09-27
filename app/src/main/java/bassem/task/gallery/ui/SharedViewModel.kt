@@ -44,9 +44,9 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun getAlbumMediaItems(album: Album) {
+    fun getAlbumMediaItems(albumName: String) {
         launchCoroutine {
-            val albumMedia = _albumsMap.value.getOrElse(album.name) { emptyList() }
+            val albumMedia = _albumsMap.value.getOrElse(albumName) { emptyList() }
             _selectedAlbumMedia.emit(albumMedia)
         }
     }

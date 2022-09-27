@@ -25,7 +25,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>() {
     override fun setupViews() {
         binding.albumRecyclerView.adapter = albumAdapter
 
-        viewModel.getAlbumMediaItems(navigationArgs.album)
+        viewModel.getAlbumMediaItems(navigationArgs.albumName)
     }
 
     override fun observeData() {
