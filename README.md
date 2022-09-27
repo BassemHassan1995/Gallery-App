@@ -7,6 +7,8 @@
 -   [x] Have 'All Images' and 'All Vidoes' folders
 -   [x] Have 'Camera' folder with the images/videos in the device camera folder
 -   [x] Clicking on any folder is opening a simple details screen in an album view
+-   [x] Change albums view from grid view to linear view and vice versa.
+
 
 
 ## Layers
