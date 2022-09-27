@@ -15,7 +15,9 @@ import bassem.task.gallery.ui.SharedViewModel
 import bassem.task.gallery.ui.base.BaseFragment
 import kotlinx.coroutines.launch
 
-class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
+class GalleryFragment : BaseFragment<FragmentGalleryBinding>(), MenuProvider {
+
+    private val menuHost: MenuHost by lazy { requireActivity() }
 
     override val viewModel by activityViewModels<SharedViewModel>()
     private val galleryAdapter: GalleryAdapter by lazy {
@@ -32,24 +34,7 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
     override fun setupViews() {
         super.setupViews()
         binding.galleryRecyclerView.adapter = galleryAdapter
-        bindMenu()
-    }
-
-    private fun bindMenu() {
-        val menuHost: MenuHost = requireActivity()
-
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                if (menuItem.itemId == R.id.menu_view) {
-                    onChangeViewSelected(menuItem)
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun onChangeViewSelected(menuItem: MenuItem) {
@@ -83,6 +68,16 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
                     }
             }
         }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) =
+        menuInflater.inflate(R.menu.menu, menu)
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == R.id.menu_view) {
+            onChangeViewSelected(menuItem)
+        }
+        return true
     }
 
 }
