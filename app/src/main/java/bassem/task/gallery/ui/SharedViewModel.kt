@@ -2,6 +2,7 @@ package bassem.task.gallery.ui
 
 import android.app.Application
 import android.provider.MediaStore
+import androidx.annotation.VisibleForTesting
 import bassem.task.gallery.data.model.Album
 import bassem.task.gallery.data.model.MediaItem
 import bassem.task.gallery.ui.base.BaseViewModel
@@ -51,10 +52,12 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    private fun getGalleryMedia(): Map<String, List<MediaItem>> =
+    @VisibleForTesting
+    internal fun getGalleryMedia(): Map<String, List<MediaItem>> =
         getGalleryImages().plus(getGalleryVideos())
 
-    private fun getGalleryImages(): Map<String, List<MediaItem>> =
+    @VisibleForTesting
+    internal fun getGalleryImages(): Map<String, List<MediaItem>> =
         mutableMapOf<String, List<MediaItem>>().apply {
             val imagesProjection = arrayOf(
                 MediaStore.Images.Media._ID,                        //Image Id
@@ -81,7 +84,8 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
             }
         }
 
-    private fun getGalleryVideos(): Map<String, List<MediaItem>> =
+    @VisibleForTesting
+    internal fun getGalleryVideos(): Map<String, List<MediaItem>> =
         mutableMapOf<String, List<MediaItem>>().apply {
             val videoProjection = arrayOf(
                 MediaStore.Video.Media._ID,                        //Video Id
