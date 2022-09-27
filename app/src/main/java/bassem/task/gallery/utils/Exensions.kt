@@ -38,7 +38,7 @@ fun Cursor.getImage(): MediaItem {
     val dateAddedColumn = getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED)
 
     val id = getLong(idColumn)
-    val name = getString(nameColumn)
+    val name = getDisplayName(nameColumn)
     val dateAdded = getLong(dateAddedColumn).toDate()
 
     val contentUri =
@@ -53,7 +53,7 @@ fun Cursor.getVideo(): MediaItem {
     val dateAddedColumn = getColumnIndexOrThrow(MediaStore.Video.Media.DATE_ADDED)
 
     val id = getLong(idColumn)
-    val name = getString(nameColumn)
+    val name = getDisplayName(nameColumn)
     val dateAdded = getLong(dateAddedColumn).toDate()
 
     val contentUri =
@@ -62,8 +62,17 @@ fun Cursor.getVideo(): MediaItem {
     return MediaItem(id, name, contentUri, dateAdded)
 }
 
-fun Cursor.getAlbumName(): String =
-    getString(getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
+fun Cursor.getImageAlbumName(): String =
+    getDisplayName(getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
+
+fun Cursor.getVideoAlbumName(): String =
+    getDisplayName(getColumnIndexOrThrow(MediaStore.Video.Media.BUCKET_DISPLAY_NAME))
+
+private fun Cursor.getDisplayName(columnIndex: Int): String =
+    when (getType(columnIndex)) {
+        Cursor.FIELD_TYPE_STRING -> getString(columnIndex)
+        else -> "Others"
+    }
 
 fun Long.toDate(): Date =
     Date(TimeUnit.SECONDS.toMillis(this))

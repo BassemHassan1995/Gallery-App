@@ -7,9 +7,10 @@ import bassem.task.gallery.data.model.Album
 import bassem.task.gallery.data.model.MediaItem
 import bassem.task.gallery.ui.base.BaseViewModel
 import bassem.task.gallery.ui.base.Event
-import bassem.task.gallery.utils.getAlbumName
 import bassem.task.gallery.utils.getImage
+import bassem.task.gallery.utils.getImageAlbumName
 import bassem.task.gallery.utils.getVideo
+import bassem.task.gallery.utils.getVideoAlbumName
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -87,7 +88,7 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
                 while (cursor.moveToNext()) {
 
                     val mediaItem = cursor.getImage()
-                    val albumName = cursor.getAlbumName()
+                    val albumName = cursor.getImageAlbumName()
 
                     set(albumName, get(albumName).orEmpty().plus(mediaItem))
                     set(ALL_IMAGES_ALBUM, get(ALL_IMAGES_ALBUM).orEmpty().plus(mediaItem))
@@ -116,7 +117,7 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
                 while (cursor.moveToNext()) {
 
                     val mediaItem = cursor.getVideo()
-                    val albumName = cursor.getAlbumName()
+                    val albumName = cursor.getVideoAlbumName()
 
                     set(albumName, get(albumName).orEmpty().plus(mediaItem))
                     set(ALL_VIDEOS_ALBUM, get(ALL_VIDEOS_ALBUM).orEmpty().plus(mediaItem))
