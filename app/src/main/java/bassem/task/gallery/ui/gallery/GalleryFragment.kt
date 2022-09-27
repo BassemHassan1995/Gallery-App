@@ -1,10 +1,10 @@
 package bassem.task.gallery.ui.gallery
 
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,9 +32,27 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
     override fun setupViews() {
         super.setupViews()
         binding.galleryRecyclerView.adapter = galleryAdapter
+        bindMenu()
     }
 
-    override fun onChangeViewSelected(menuItem: MenuItem) {
+    private fun bindMenu() {
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                if (menuItem.itemId == R.id.menu_view) {
+                    onChangeViewSelected(menuItem)
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun onChangeViewSelected(menuItem: MenuItem) {
         with(binding.galleryRecyclerView) {
             if (layoutManager is GridLayoutManager) {
                 layoutManager = LinearLayoutManager(context)
@@ -58,7 +76,7 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
             viewLifecycleOwner.lifecycleScope.launch {
                 isLoading.flowWithLifecycle(lifecycle)
                     .collect {
-                        binding.progressCircular.visibility = when(it){
+                        binding.progressCircular.visibility = when (it) {
                             true -> View.VISIBLE
                             false -> View.GONE
                         }

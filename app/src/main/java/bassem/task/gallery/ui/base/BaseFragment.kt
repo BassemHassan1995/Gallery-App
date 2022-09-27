@@ -3,15 +3,14 @@ package bassem.task.gallery.ui.base
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
 import androidx.core.content.ContextCompat
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
@@ -46,28 +45,7 @@ abstract class BaseFragment<Binding : ViewBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         observeData()
-        bindMenu()
     }
-
-    private fun bindMenu() {
-        val menuHost: MenuHost = requireActivity()
-
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                // Add menu items here
-                menuInflater.inflate(R.menu.menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                if (menuItem.itemId == R.id.menu_view) {
-                    onChangeViewSelected(menuItem)
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
-    abstract fun onChangeViewSelected(menuItem: MenuItem)
 
     override fun onDestroyView() {
         super.onDestroyView()
