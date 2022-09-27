@@ -33,6 +33,7 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun getGallery() {
+        startLoading()
         launchCoroutine {
             _albumsMap.value = getGalleryMedia()
             _galleryAlbums.value = _albumsMap.value.entries.map {
@@ -42,6 +43,8 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
                     thumbnail = it.value.firstOrNull()?.contentUri
                 )
             }.sortedBy { it.name }
+
+            stopLoading()
         }
     }
 

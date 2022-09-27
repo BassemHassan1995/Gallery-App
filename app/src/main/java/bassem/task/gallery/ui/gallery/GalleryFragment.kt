@@ -2,6 +2,7 @@ package bassem.task.gallery.ui.gallery
 
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -52,6 +53,15 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding>() {
                 galleryAlbums.flowWithLifecycle(lifecycle)
                     .collect {
                         galleryAdapter.submitList(it)
+                    }
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                isLoading.flowWithLifecycle(lifecycle)
+                    .collect {
+                        binding.progressCircular.visibility = when(it){
+                            true -> View.VISIBLE
+                            false -> View.GONE
+                        }
                     }
             }
         }
