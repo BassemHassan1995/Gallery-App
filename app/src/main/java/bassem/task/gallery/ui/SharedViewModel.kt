@@ -56,8 +56,15 @@ class SharedViewModel(application: Application) : BaseViewModel(application) {
     }
 
     @VisibleForTesting
-    internal fun getGalleryMedia(): Map<String, List<MediaItem>> =
-        getGalleryImages().plus(getGalleryVideos())
+    internal fun getGalleryMedia(): Map<String, List<MediaItem>> {
+        val images = getGalleryImages().asSequence()
+        val videos = getGalleryVideos().asSequence()
+
+        return (images + videos)
+            .distinct()
+            .groupBy({ it.key }, { it.value })
+            .mapValues { (_, values) -> values.flatten() }
+    }
 
     @VisibleForTesting
     internal fun getGalleryImages(): Map<String, List<MediaItem>> =
